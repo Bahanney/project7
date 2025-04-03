@@ -5,7 +5,7 @@ import os
 
 db = mysql.connector.connect(
     host=os.getenv("DB_HOST", "172.31.8.18"),
-    user=os.getenv("DB_USER", "roots"),
+    user=os.getenv("DB_USER", "devops"),
     password=os.getenv("DB_PASS", "rootpassword"),
     database=os.getenv("DB_NAME", "syslogs")
 )
