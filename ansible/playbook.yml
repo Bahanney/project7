@@ -5,11 +5,10 @@
   vars_files:
     - vars.yml
   vars:
-    ansible_ssh_private_key_file: /home/ubuntu/bee.pem  # Ensure this path is correct
+    ansible_ssh_private_key_file: /var/lib/jenkins/bee.pem  # Updated path
   tasks:
     - name: Gather facts
       ansible.builtin.setup:
-        ansible_ssh_private_key_file: "{{ ansible_ssh_private_key_file }}"  # Use the variable to reference the key
 
   roles:
     - install_python
@@ -22,10 +21,12 @@
   vars_files:
     - vars.yml
   vars:
-    ansible_ssh_private_key_file: /home/ubuntu/bee.pem  # Ensure this path is correct
+    ansible_ssh_private_key_file: /var/lib/jenkins/bee.pem  # Updated path
   tasks:
     - name: Gather facts
       ansible.builtin.setup:
-        ansible_ssh_private_key_file: "{{ ansible_ssh_private_key_file }}"  # Use the variable to reference the key
+
   roles:
     - setup_mysql
+    
+...
