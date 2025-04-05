@@ -4,18 +4,18 @@ pipeline {
     environment {
         AWS_DEFAULT_REGION = 'us-east-2'
         S3_BUCKET = 'mybucket-hybee'
-        AWS_CREDENTIALS = credentials('aws-s3-creds')
-        SSH_PRIVATE_KEY = credentials('bee-ssh-key')  // Add the SSH key as a secret
     }
 
     stages {
         stage('Run Ansible Playbook') {
             steps {
-                ansiblePlaybook(
-                    playbook: 'ansible/playbook.yml',
-                    inventory: 'hosts.ini',
-                    extras: "--extra-vars \"ansible_ssh_common_args='-o StrictHostKeyChecking=no'\" --private-key ${env.SSH_PRIVATE_KEY}"
-                )
+                withCredentials([sshUserPrivateKey(credentialsId: 'bee-ssh-key', keyFileVariable: 'SSH_KEY')]) {
+                    ansiblePlaybook(
+                        playbook: 'ansible/playbook.yml',
+                        inventory: 'hosts.ini',
+                        extras: "--private-key=${SSH_KEY} -e ansible_ssh_common_args='-o StrictHostKeyChecking=no'"
+                    )
+                }
             }
         }
 
