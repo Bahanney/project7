@@ -13,10 +13,7 @@ pipeline {
                     ansiblePlaybook(
                         playbook: 'ansible/playbook.yml',
                         inventory: 'hosts.ini',
-                        extras: "--private-key=${SSH_KEY}",
-                        extraVars: [
-                            ansible_ssh_common_args: "-o StrictHostKeyChecking=no"
-                        ]
+                        extras: '--private-key=$SSH_KEY -e ansible_ssh_common_args=\'-o StrictHostKeyChecking=no\''
                     )
                 }
             }
