@@ -21,7 +21,7 @@ pipeline {
             steps {
                 sh '''
                     mkdir -p artifact
-                    cp ansible/system_logger.py ansible/config.ini artifact/
+                    cp ansible//roles/install_python/tasks/files/system_logger.py artifact/
                     zip -r project7_artifact.zip artifact
                 '''
                 archiveArtifacts artifacts: 'project7_artifact.zip', fingerprint: true
