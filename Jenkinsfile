@@ -16,6 +16,7 @@ pipeline {
 
         stage('Run Ansible Playbook') {
             steps {
+              dir('ansible') {
                 ansiblePlaybook(
                     playbook: 'playbook.yml',
                     inventory: 'hosts.ini',
@@ -23,6 +24,7 @@ pipeline {
                 )
             }
         }
+    }
 
         stage('Zip Artifact') {
             steps {
