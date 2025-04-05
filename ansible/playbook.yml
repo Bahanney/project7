@@ -1,18 +1,19 @@
 ---
 - name: Provision Jenkins Agents
-  hosts: jenkins_agents  # Runs only on the Jenkins agents
+  hosts: jenkins_agents
   become: true
   vars_files:
     - vars.yml
   vars:
-    ansible_ssh_private_key_file: /home/ubuntu/bee.pem  # Ensure this points to the correct file
+    ansible_ssh_private_key_file: /home/ubuntu/bee.pem  # Ensure this path is correct
+
   roles:
     - install_python
-    - install_cron  # Ensure cron is installed before scheduling the script
-    - schedule_script  # Moved setup_mysql out of here!
+    - install_cron
+    - schedule_script
 
 - name: Setup MySQL Server
-  hosts: g2  # Runs only on the MySQL server
+  hosts: g2
   become: true
   vars_files:
     - vars.yml
