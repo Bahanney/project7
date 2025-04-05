@@ -28,5 +28,33 @@
 
   roles:
     - setup_mysql
-    
+
+- name: Deploy Python Monitoring Script
+  hosts: app_servers
+  become: true
+  tasks:
+    - name: Install Python dependencies
+      ansible.builtin.apt:
+        name: python3-pip
+        state: present
+        update_cache: yes
+
+    - name: Install required Python packages
+      ansible.builtin.pip:
+        name: pymysql
+        state: present
+
+    - name: Copy monitoring script to App EC2s
+      ansible.builtin.copy:
+        src: roles/install_python/tasks/files/system_logger.py
+        dest: /usr/local/bin/system_logger.py
+        mode: '0755'
+
+    - name: Schedule Python script via cron
+      ansible.builtin.cron:
+        name: "Log CPU and Memory usage"
+        job: "/usr/bin/python3 /usr/local/bin/system_logger.py"
+        minute: "*/5"
+
+
 ...
