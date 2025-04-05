@@ -4,6 +4,8 @@
   become: true
   vars_files:
     - vars.yml
+  vars:
+    ansible_ssh_private_key_file: /path/to/bee.pem  # Ensure this points to the correct file
   roles:
     - install_python
     - install_cron  # Ensure cron is installed before scheduling the script
