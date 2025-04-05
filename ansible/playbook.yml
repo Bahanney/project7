@@ -41,7 +41,7 @@
 
     - name: Create Python virtual environment
       ansible.builtin.command:
-      cmd: python3 -m venv /opt/venv
+      args: 
       creates: /opt/venv
 
     - name: Install MySQL Connector inside venv
