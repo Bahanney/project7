@@ -40,7 +40,7 @@
         update_cache: yes
 
     - name: Install required Python packages
-      ansible.builtin.pip:
+      ansible.builtin.apt:
         name: pymysql
         state: present
 
