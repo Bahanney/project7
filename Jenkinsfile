@@ -9,12 +9,9 @@ pipeline {
     stages {
         stage('Run Ansible Playbook') {
             steps {
-                ansiblePlaybook(
-                    playbook: 'ansible/playbook.yml',
-                    inventory: 'hosts.ini',
-                    credentialsId: 'bee-ssh-key',
-                    disableHostKeyChecking: true
-                )
+                withCredentials([sshUserPrivateKey(credentialsId: 'bee-ssh-key', keyFileVariable: 'SSH_KEY')]) {
+                    sh "ansible-playbook ansible/playbook.yml -i hosts.ini --private-key=${SSH_KEY} -u ec2-user -e 'ansible_ssh_common_args=-o StrictHostKeyChecking=no'"
+                }
             }
         }
 
