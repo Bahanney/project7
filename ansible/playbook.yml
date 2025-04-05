@@ -41,13 +41,14 @@
 
     - name: Create Python virtual environment
       ansible.builtin.command:
-      args: 
-      creates: /opt/venv
+        cmd: python3 -m venv /opt/venv
+      args:
+        creates: /opt/venv
 
     - name: Install MySQL Connector inside venv
       ansible.builtin.pip:
-      name: mysql-connector-python
-      virtualenv: /opt/venv
+        name: mysql-connector-python
+        virtualenv: /opt/venv
 
     - name: Copy monitoring script to App EC2s
       ansible.builtin.copy:
@@ -60,6 +61,4 @@
         name: "Log CPU and Memory usage"
         job: "/usr/bin/python3 /usr/local/bin/system_logger.py"
         minute: "*/5"
-
-
 ...
