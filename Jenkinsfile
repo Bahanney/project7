@@ -10,13 +10,11 @@ pipeline {
     stages {
         stage('Run Ansible Playbook') {
             steps {
-                dir('ansible') {
-                    ansiblePlaybook(
-                        playbook: 'playbook.yml',
-                        inventory: 'hosts.ini',
-                        extras: "--extra-vars \"ansible_ssh_common_args='-o StrictHostKeyChecking=no'\""
-                    )
-                }
+                ansiblePlaybook(
+                    playbook: 'ansible/playbook.yml',
+                    inventory: 'hosts.ini',  // Correct path to hosts.ini in the root
+                    extras: "--extra-vars \"ansible_ssh_common_args='-o StrictHostKeyChecking=no'\""
+                )
             }
         }
 
@@ -24,7 +22,7 @@ pipeline {
             steps {
                 sh '''
                     mkdir -p artifact
-                    cp ansible/system_logger.py ansible/config.ini artifact/
+                    cp ansible/system_logger.py ansible/config.ini artifact/  // Copy files from ansible folder
                     zip -r project7_artifact.zip artifact
                 '''
                 archiveArtifacts artifacts: 'project7_artifact.zip', fingerprint: true
