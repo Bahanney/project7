@@ -39,25 +39,24 @@
         state: present
         update_cache: yes
 
-- name: Create Python virtual environment
-  ansible.builtin.command:
-    cmd: python3 -m venv /opt/venv
-    creates: /opt/venv
+    - name: Create Python virtual environment
+      ansible.builtin.command:
+      cmd: python3 -m venv /opt/venv
+      creates: /opt/venv
 
-- name: Install MySQL Connector inside venv
-  ansible.builtin.pip:
-    name: mysql-connector-python
-    virtualenv: /opt/venv
+    - name: Install MySQL Connector inside venv
+      ansible.builtin.pip:
+      name: mysql-connector-python
+      virtualenv: /opt/venv
 
-
-- name: Copy monitoring script to App EC2s
-  ansible.builtin.copy:
+    - name: Copy monitoring script to App EC2s
+      ansible.builtin.copy:
         src: roles/install_python/tasks/files/system_logger.py
         dest: /usr/local/bin/system_logger.py
         mode: '0755'
 
-- name: Schedule Python script via cron
-  ansible.builtin.cron:
+    - name: Schedule Python script via cron
+      ansible.builtin.cron:
         name: "Log CPU and Memory usage"
         job: "/usr/bin/python3 /usr/local/bin/system_logger.py"
         minute: "*/5"
