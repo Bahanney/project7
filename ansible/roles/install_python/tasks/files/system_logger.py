@@ -8,6 +8,23 @@ db = mysql.connector.connect(
     user=os.getenv("DB_USER", "devops"),
     password=os.getenv("DB_PASS", "rootpassword"),
     database=os.getenv("DB_NAME", "syslogs")
+    # Try using 'devops' first, then fallback to 'root' if it fails
+def connect_to_db():
+    try:
+        return mysql.connector.connect(
+            host="172.31.8.18",
+            user="devops",
+            password="rootpassword",
+            database="syslogs"
+        )
+    except mysql.connector.Error:
+        print("⚠️ DevOps user failed, switching to root...")
+        return mysql.connector.connect(
+            host="172.31.8.18",
+            user="root",
+            password="rootpassword",
+            database="syslogs"
+        )
 )
 
 cursor = db.cursor()
