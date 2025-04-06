@@ -17,8 +17,8 @@ timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 user_name = "Ibinabo" 
 custom_message = "Group5, I am getting better in DevOps" 
 
-cursor.execute("INSERT INTO stats (timestamp, cpu_usage, memory_usage) VALUES (%s, %s, %s)",
-               (timestamp, cpu, mem))
+cursor.execute("INSERT INTO stats (timestamp, cpu_usage, memory_usage, user_name custom_message) VALUES (%s, %s, %s)",
+               (timestamp, cpu, mem, user_name, custom_message))
 db.commit()
 cursor.close()
 db.close()
