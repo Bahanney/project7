@@ -14,6 +14,7 @@ cursor = db.cursor()
 cpu = psutil.cpu_percent()
 mem = psutil.virtual_memory().percent
 timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+user_name = "Ibinabo" 
 
 cursor.execute("INSERT INTO stats (timestamp, cpu_usage, memory_usage) VALUES (%s, %s, %s)",
                (timestamp, cpu, mem))
